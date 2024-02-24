@@ -16,6 +16,7 @@ export default function REPL() {
   // TODO: Add some kind of shared state that holds all the commands submitted.
   // CHANGED
   const [history, setHistory] = useState<string[]>([])
+  const [output, setOutput] = useState<string>('')
 
   return (
     <div className="repl">  
@@ -24,7 +25,7 @@ export default function REPL() {
       <REPLHistory history={history}/>
       <hr></hr>
       {/* CHANGED */}
-      <REPLInput history={history} setHistory={setHistory}/>
+      <REPLInput history={history} setHistory={setHistory} mode={false}/>
     </div>
   );
 }
