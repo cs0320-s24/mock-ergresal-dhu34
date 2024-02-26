@@ -67,6 +67,12 @@ export function REPLInput(props: REPLInputProps) {
 
   // searches through dataset for object in designated column
   function search(commands: string[]) {
+    if (commands.length < 3){
+      return "Function needs 3 arguments: search {column} {object}"
+    }
+    if (myData.length == 0){
+      return "No data loaded"
+    }
     let columnNumber: number = findColumnNumber(commands[1]);
     if (columnNumber == -1) {
       return "Column not found";
@@ -92,7 +98,7 @@ export function REPLInput(props: REPLInputProps) {
     }
     // else if (command[0] == "test") {
     //   load_file("file1")
-    //   let myarray = ["hu", "1", "hi"]
+    //   let myarray = ["hu", "1", "The"]
     //   return search(myarray)
     // }
     else if (command[0] == "load_file") {
@@ -134,7 +140,6 @@ export function REPLInput(props: REPLInputProps) {
         "output: " + handleOutput(commandString.split(" ")),
       ]);
     }
-    // setOutput('Invalid command')
     setCommandString("");
   }
   /**
@@ -156,7 +161,7 @@ export function REPLInput(props: REPLInputProps) {
         />
       </fieldset>
       {/* TODO: Currently this button just counts up, can we make it push the contents of the input box to the history?*/}
-      <button onClick={() => handleSubmit(commandString.toLowerCase())}>
+      <button aria-label={"Submit"} onClick={() => handleSubmit(commandString.toLowerCase())}>
         Submitted {count} times
       </button>
     </div>

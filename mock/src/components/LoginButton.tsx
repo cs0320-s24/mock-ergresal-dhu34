@@ -14,12 +14,18 @@ export function LoginButton(props: loginProps) {
 
   const authenticate = () => {
     const user = mockedUserData.find(user => user.username === username);
-    // if (!user || user.password !== password) {
-    //   seterrormessage('Invalid username or password');
-    //   return;
-    // }
+    if (!user || user.password !== password) {
+      seterrormessage('Invalid username or password');
+      return;
+    }
     const newValue = !props.isLoggedIn
+   
     props.setIsLoggedIn(newValue)
+    if (!newValue){ 
+      setUsername('');
+      setPassword('');
+      seterrormessage('');
+    }
     return newValue
   }
 
@@ -34,15 +40,17 @@ export function LoginButton(props: loginProps) {
         type="text"
         placeholder="Enter username: "
         value={username}
+        aria-label={"Username"}
         onChange={(event) => setUsername(event.target.value)}
       />
       <input
         type="text"
         placeholder="Enter password: "
         value={password}
+        aria-label={"Password"}
         onChange={(event) => setPassword(event.target.value)}
       />
-      <p style={{ color: 'red' }}>{errormessage}</p>
+      <p aria-label={"errormessage"} style={{ color: 'red' }}>{errormessage}</p>
       <button aria-label='Login' onClick={authenticate}>Login</button>
     </div>
     )
