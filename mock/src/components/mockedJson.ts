@@ -1,14 +1,20 @@
-const mockedData = {
-    name: "John Doe",
-    age: 30,
-    email: "johndoe@example.com",
-    address: {
-        street: "123 Main St",
-        city: "New York",
-        state: "NY",
-        zipCode: "10001"
-    },
-    hobbies: ["reading", "coding", "playing guitar"]
-};
+export const exampleCSV1 = [
+  [1, 2, 3, 4, 5],
+  ["The", "song", "remains", "the", "same."],
+];
 
-console.log(mockedData);
+export const exampleCSV2 = [
+  [1, 2, 3, 4, 5],
+  ["The", "song", "remains", "the", "same."],
+  ["O", "K", "C", "O", "O", "L"],
+];
+
+export const exampleCSV3 = [
+    ["a", "b", "c", "d"],
+    ["A", "B", "C", "D"],
+    ["F", "G", "H", "I"],
+    ["J", "K", "H", "I"],
+  ];
+
+class MockedJson {}
+export {};
