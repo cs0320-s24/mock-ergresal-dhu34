@@ -66,12 +66,13 @@ export function REPLInput(props: REPLInputProps) {
   }
 
   // searches through dataset for object in designated column
+  // starting at the 2nd row, since 1st is considered columnHeaders
   function search(commands: string[]) {
-    if (commands.length < 3){
-      return "Function needs 3 arguments: search {column} {object}"
+    if (commands.length < 3) {
+      return "Function needs 3 arguments: search {column} {object}";
     }
-    if (myData.length == 0){
-      return "No data loaded"
+    if (myData.length == 0) {
+      return "No data loaded";
     }
     let columnNumber: number = findColumnNumber(commands[1]);
     if (columnNumber == -1) {
@@ -92,9 +93,11 @@ export function REPLInput(props: REPLInputProps) {
   }
 
   function handleOutput(command: string[]) {
+    const results: string[] = [];
+
     if (commandString === "mode") {
       setMode(!mode);
-      return "Mode changed";
+      results.push( "Mode changed");
     }
     // else if (command[0] == "test") {
     //   load_file("file1")
@@ -103,33 +106,42 @@ export function REPLInput(props: REPLInputProps) {
     // }
     else if (command[0] == "load_file") {
       if (load_file(command[1])) {
-        return "Data loaded successfully";
+        results.push("Data loaded successfully");
       } else {
-        return "File not found";
+        results.push("File not found");
       }
     } else if (commandString == "view") {
-      if (myData) return myData;
-      else {
-        return "No data loaded";
+      if (myData) {
+        // var table = document.getElementById("myTable") as HTMLTableElement;
+        // var row = table.insertRow(0);
+        // var cell1 = row.insertCell(0);
+        // var cell2 = row.insertCell(1);
+        // cell1.innerHTML = "NEW CELL1";
+        // cell2.innerHTML = "NEW CELL2";
+        results.push(myData);
+      } else {
+        results.push("No data loaded");
       }
     } else if (command[0] == "search") {
-      return search(command);
+      results.push(search(command));
+      results.push("I JUST SEARCHED~")
     } else {
-      return "Invalid command";
+      results.push("Invalid command");
     }
+    return results;
   }
 
   // This function is triggered when the button is clicked.
   function handleSubmit(commandString: string) {
     setCount(count + 1);
-    // CHANGED
-    // handleOutput(commandString)
-    //brief
+    const results: string[] = [];
+
 
     if (!mode) {
       props.setHistory([
         ...props.history,
-        "output: " + handleOutput(commandString.split(" ")),
+        "output: " + handleOutput(commandString.split(" "))[0],
+        "next line: " + handleOutput(commandString.split(" "))[1],
       ]);
     }
     //verbose
@@ -137,7 +149,7 @@ export function REPLInput(props: REPLInputProps) {
       props.setHistory([
         ...props.history,
         "input: " + commandString,
-        "output: " + handleOutput(commandString.split(" ")),
+        "output: " + handleOutput(commandString.split(" "))[0],
       ]);
     }
     setCommandString("");
@@ -161,7 +173,10 @@ export function REPLInput(props: REPLInputProps) {
         />
       </fieldset>
       {/* TODO: Currently this button just counts up, can we make it push the contents of the input box to the history?*/}
-      <button aria-label={"Submit"} onClick={() => handleSubmit(commandString.toLowerCase())}>
+      <button
+        aria-label={"Submit"}
+        onClick={() => handleSubmit(commandString.toLowerCase())}
+      >
         Submitted {count} times
       </button>
     </div>
