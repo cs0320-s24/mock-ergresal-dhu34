@@ -5,7 +5,6 @@ import { Console } from "console";
 import { exampleCSV1 } from "./mockedJson";
 import { exampleCSV2 } from "./mockedJson";
 import { exampleCSV3 } from "./mockedJson";
-import internal from "stream";
 
 const mock_files: Map<string, any> = new Map([
   ["file1", exampleCSV1],
@@ -14,8 +13,6 @@ const mock_files: Map<string, any> = new Map([
 ]);
 
 interface REPLInputProps {
-  // TODO: Fill this with desired props... Maybe something to keep track of the submitted commands
-  // CHANGED
   history: string[];
   setHistory: Dispatch<SetStateAction<string[]>>;
   mode: boolean;
@@ -26,13 +23,13 @@ export function REPLInput(props: REPLInputProps) {
   // Remember: let React manage state in your webapp.
   // Manages the contents of the input box
   const [commandString, setCommandString] = useState<string>("");
-  const [myData, setMyData] = useState<string[][]>();
+  const [myData, setMyData] = useState<string[][]>([]);
   // TODO WITH TA : add a count state
   const [count, setCount] = useState<number>(0);
   const [mode, setMode] = useState<boolean>(props.mode);
   
   // loads file into myData, returns whether or not fileName was found
-  function load_file(filename: string) {
+  function load_file(filename: string): Boolean {
     const fileData: any[][] = mock_files.get(filename);
     if (fileData) {
       setMyData(fileData);
@@ -48,7 +45,7 @@ export function REPLInput(props: REPLInputProps) {
   // If the column strings themselves are ints, then whichever is found
   // first will be the designated column (ie searching for column 1 in 3 2 1
   // will yield column 1, or in this case "2", since it is found first
-  function findColumnNumber(columnNumberString: string) {
+  function findColumnNumber(columnNumberString: string): number {
     let mystring = columnNumberString;
     let colNum: number = parseInt(mystring);
     if (isNaN(colNum)) {
@@ -68,8 +65,8 @@ export function REPLInput(props: REPLInputProps) {
 
   // searches through dataset for object in designated column
   // starting at the 2nd row, since 1st is considered columnHeaders
-  function search(commands: string[]) {
-    if (!myData){
+  function search(commands: string[]): string {
+    if (myData == undefined){
       return "this shouldnt happen"
     }
     if (commands.length < 3) {
@@ -93,42 +90,42 @@ export function REPLInput(props: REPLInputProps) {
     if (results.length == 0) {
       return commands[2] + " not found in column " + columnNumber;
     }
-    return "Found in rows: \n" + results.join("\n");
+    return "Found in rows: " + results;
   }
 
   function handleOutput(command: string[]) {
-    const results: string[] = [];
+    let results = ""
 
     if (commandString === "mode") {
       setMode(!mode);
-      results.push("Mode changed");
+      results ="Mode changed";
     }
-    // else if (command[0] == "test") {
-    //   load_file("file1")
-    //   let myarray = ["hu", "1", "The"]
-    //   return search(myarray)
-    // }
+    else if (command[0] == "t") {
+      load_file("file1")
+      let myarray = ["hu", "1", "The"]
+      results =search(myarray)
+    }
     else if (command[0] == "load_file") {
       if (load_file(command[1])) {
-        results.push("Data loaded successfully");
+        results="Data loaded successfully";
       } else {
-        results.push("File not found");
+        results=("File not found");
       }
     } else if (commandString == "view") {
-      if (myData) {
-        for (let i = 0; i > myData.length; i++) {
-          results.push(myData[i].toString());
+      if (myData){
+        for (let i = 0; i < myData.length; i++) {
+          results=(myData[i].toString());
         }
-      } else {
-        results.push("No data loaded");
       }
+      else {
+        results=("No data loaded");
+      }      
     } else if (command[0] == "search") {
-      results.push(search(command));
-      results.push("I JUST SEARCHED~");
+      results=(search(command));
     } else {
-      results.push("Invalid command");
+      results=("Invalid command");
     }
-    return results;
+    return results
   }
 
   // This function is triggered when the button is clicked.
@@ -139,7 +136,7 @@ export function REPLInput(props: REPLInputProps) {
     if (!mode) {
       props.setHistory([
       ...props.history,
-       handleOutput(commandString.split(" "))[0],
+       ""+handleOutput(commandString.split(" ")),
       ]);
     }
     //verbose

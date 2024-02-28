@@ -1,23 +1,23 @@
 import '../styles/main.css';
 
 interface REPLHistoryProps {
-    history: string[][];
+    history: string[];
 }
 
 export function REPLHistory(props: REPLHistoryProps) {
     return (
         <div className="repl-history" aria-label="repl history">
-            {/* Check if history is an array */}
-                <table>
-                    <tbody>
-                        <tr>
-                            {/* Map over each cell in the row */}
-                            {props.history.map((cell, index) => (
-                                <p><td key={index}>{cell}</td></p>
-                            ))}
-                        </tr>
-                    </tbody>
-                </table>
+        
+                {/* <table> */}
+                    {/* <tbody> */}
+                        {/* Map over each cell in the row */}
+                        {props.history.map((cell, index) => (
+                            <tr key={index}>
+                                <td>{cell}</td>
+                            </tr>
+                        ))}
+                    {/* </tbody> */}
+                {/* </table> */}
         </div>
     );
 }
