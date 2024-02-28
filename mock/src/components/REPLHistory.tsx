@@ -1,7 +1,7 @@
 import '../styles/main.css';
 
 interface REPLHistoryProps {
-    history: string[];
+    history: string[][];
 }
 
 export function REPLHistory(props: REPLHistoryProps) {

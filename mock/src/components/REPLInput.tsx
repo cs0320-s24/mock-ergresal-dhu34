@@ -26,14 +26,14 @@ export function REPLInput(props: REPLInputProps) {
   // Remember: let React manage state in your webapp.
   // Manages the contents of the input box
   const [commandString, setCommandString] = useState<string>("");
-  const [myData, setMyData] = useState<string>("");
+  const [myData, setMyData] = useState<string[][]>();
   // TODO WITH TA : add a count state
   const [count, setCount] = useState<number>(0);
   const [mode, setMode] = useState<boolean>(props.mode);
-
+  
   // loads file into myData, returns whether or not fileName was found
   function load_file(filename: string) {
-    const fileData = mock_files.get(filename);
+    const fileData: any[][] = mock_files.get(filename);
     if (fileData) {
       setMyData(fileData);
       return true;
@@ -54,6 +54,7 @@ export function REPLInput(props: REPLInputProps) {
     if (isNaN(colNum)) {
       colNum = -1;
     }
+    if (myData){
     for (let i = 0; i < myData[0].length; i++) {
       if (
         columnNumberString === myData[0][i].toString().toLowerCase() ||
@@ -61,13 +62,16 @@ export function REPLInput(props: REPLInputProps) {
       ) {
         return i;
       }
-    }
+    }}
     return -1;
   }
 
   // searches through dataset for object in designated column
   // starting at the 2nd row, since 1st is considered columnHeaders
   function search(commands: string[]) {
+    if (!myData){
+      return "this shouldnt happen"
+    }
     if (commands.length < 3) {
       return "Function needs 3 arguments: search {column} {object}";
     }
@@ -82,7 +86,7 @@ export function REPLInput(props: REPLInputProps) {
     for (let i = 1; i < myData.length; i++) {
       if (columnNumber >= 0 && columnNumber < myData[i].length) {
         if (myData[i][columnNumber].toLowerCase() === commands[2]) {
-          results.push(myData[i]);
+          results.push(myData[i].toString());
         }
       }
     }
@@ -97,7 +101,7 @@ export function REPLInput(props: REPLInputProps) {
 
     if (commandString === "mode") {
       setMode(!mode);
-      results.push( "Mode changed");
+      results.push("Mode changed");
     }
     // else if (command[0] == "test") {
     //   load_file("file1")
@@ -112,19 +116,15 @@ export function REPLInput(props: REPLInputProps) {
       }
     } else if (commandString == "view") {
       if (myData) {
-        // var table = document.getElementById("myTable") as HTMLTableElement;
-        // var row = table.insertRow(0);
-        // var cell1 = row.insertCell(0);
-        // var cell2 = row.insertCell(1);
-        // cell1.innerHTML = "NEW CELL1";
-        // cell2.innerHTML = "NEW CELL2";
-        results.push(myData);
+        for (let i = 0; i > myData.length; i++) {
+          results.push(myData[i].toString());
+        }
       } else {
         results.push("No data loaded");
       }
     } else if (command[0] == "search") {
       results.push(search(command));
-      results.push("I JUST SEARCHED~")
+      results.push("I JUST SEARCHED~");
     } else {
       results.push("Invalid command");
     }
@@ -136,12 +136,10 @@ export function REPLInput(props: REPLInputProps) {
     setCount(count + 1);
     const results: string[] = [];
 
-
     if (!mode) {
       props.setHistory([
-        ...props.history,
-        "output: " + handleOutput(commandString.split(" "))[0],
-        "next line: " + handleOutput(commandString.split(" "))[1],
+      ...props.history,
+       handleOutput(commandString.split(" "))[0],
       ]);
     }
     //verbose
