@@ -20,7 +20,7 @@ export function REPLInput(props: REPLInputProps) {
   // TODO WITH TA : add a count state
   const [count, setCount] = useState<number>(0);
   const [myData, setMyData] = useState<any[][]>([]);
-  const [mode, setMode] = useState<boolean>(true);
+  const [mode, setMode] = useState<boolean>(false);
 
   // This function is triggered when the button is clicked.
   function handleSubmit(commandString: string) {
@@ -40,7 +40,7 @@ export function REPLInput(props: REPLInputProps) {
     else {
       props.setHistory([
         ...props.history,
-        output, 
+        ["Input: "+ commandString], output, 
       ]);
     }
     setCommandString("");

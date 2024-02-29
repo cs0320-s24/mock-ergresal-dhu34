@@ -131,8 +131,10 @@ export function REPLFunction(
     } else {
       results.push("Invalid command");
     }
+    results.push("SEPERATELINE?")
     return results;
   }
+
 //   return ["IOPUHGYVBIJUYGFTYGVBHJ"]
   return handleOutput(command)
 }
