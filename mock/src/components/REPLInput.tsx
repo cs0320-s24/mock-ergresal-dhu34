@@ -137,14 +137,14 @@ export function REPLInput(props: REPLInputProps) {
     if (!mode) {
       props.setHistory([
         ...props.history,
-        "" + output])
+        "" + handleOutput(commandString.split(" "))])
     }
     //verbose
     else {
       props.setHistory([
         ...props.history,
         "input: " + commandString,
-        "output: " + handleOutput(commandString.split(" "))[0],
+        "output: " + handleOutput(commandString.split(" ")),
       ]);
     }
     setCommandString("");
