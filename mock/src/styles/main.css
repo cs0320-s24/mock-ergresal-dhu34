@@ -3,6 +3,10 @@
   Positioning in CSS can sometimes be annoying to manage, so we've opted to 
   give you this starter CSS. Feel free to modify it as you wish, though.
 */
+table, th, td {
+    border:1px solid black;
+    background-color: aqua;
+}
 
 .repl {
     position:relative;
