@@ -5,6 +5,7 @@ import { Console } from "console";
 import { exampleCSV1 } from "./mockedJson";
 import { exampleCSV2 } from "./mockedJson";
 import { exampleCSV3 } from "./mockedJson";
+import { REPLFunction } from "./REPLFunction";
 
 const mock_files: Map<string, any> = new Map([
   ["file1", exampleCSV1],
@@ -27,7 +28,7 @@ export function REPLInput(props: REPLInputProps) {
   // TODO WITH TA : add a count state
   const [count, setCount] = useState<number>(0);
   const [mode, setMode] = useState<boolean>(props.mode);
-  
+
   // loads file into myData, returns whether or not fileName was found
   function load_file(filename: string): Boolean {
     const fileData: any[][] = mock_files.get(filename);
@@ -51,23 +52,24 @@ export function REPLInput(props: REPLInputProps) {
     if (isNaN(colNum)) {
       colNum = -1;
     }
-    if (myData){
-    for (let i = 0; i < myData[0].length; i++) {
-      if (
-        columnNumberString === myData[0][i].toString().toLowerCase() ||
-        colNum == i
-      ) {
-        return i;
+    if (myData) {
+      for (let i = 0; i < myData[0].length; i++) {
+        if (
+          columnNumberString === myData[0][i].toString().toLowerCase() ||
+          colNum == i
+        ) {
+          return i;
+        }
       }
-    }}
+    }
     return -1;
   }
 
   // searches through dataset for object in designated column
   // starting at the 2nd row, since 1st is considered columnHeaders
   function search(commands: string[]): string {
-    if (myData == undefined){
-      return "this shouldnt happen"
+    if (myData == undefined) {
+      return "this shouldnt happen";
     }
     if (commands.length < 3) {
       return "Function needs 3 arguments: search {column} {object}";
@@ -94,50 +96,48 @@ export function REPLInput(props: REPLInputProps) {
   }
 
   function handleOutput(command: string[]) {
-    let results = ""
+    let results = "";
 
     if (commandString === "mode") {
       setMode(!mode);
-      results ="Mode changed";
-    }
-    else if (command[0] == "t") {
-      load_file("file1")
-      let myarray = ["hu", "1", "The"]
-      results =search(myarray)
-    }
-    else if (command[0] == "load_file") {
+      results = "Mode changed";
+    } else if (command[0] == "t") {
+      load_file("file1");
+      let myarray = ["hu", "1", "The"];
+      results = search(myarray);
+    } else if (command[0] == "load_file") {
       if (load_file(command[1])) {
-        results="Data loaded successfully";
+        results = "Data loaded successfully";
       } else {
-        results=("File not found");
+        results = "File not found";
       }
     } else if (commandString == "view") {
-      if (myData){
+      if (myData) {
         for (let i = 0; i < myData.length; i++) {
-          results=(myData[i].toString());
+          results = myData[i].toString();
         }
+      } else {
+        results = "No data loaded";
       }
-      else {
-        results=("No data loaded");
-      }      
     } else if (command[0] == "search") {
-      results=(search(command));
+      results = search(command);
     } else {
-      results=("Invalid command");
+      results = "Invalid command";
     }
-    return results
+    return results;
   }
 
   // This function is triggered when the button is clicked.
   function handleSubmit(commandString: string) {
     setCount(count + 1);
     const results: string[] = [];
-
+    const output = REPLFunction({
+      command: commandString.split(" "),
+    });
     if (!mode) {
       props.setHistory([
-      ...props.history,
-       ""+handleOutput(commandString.split(" ")),
-      ]);
+        ...props.history,
+        "" + output])
     }
     //verbose
     else {
