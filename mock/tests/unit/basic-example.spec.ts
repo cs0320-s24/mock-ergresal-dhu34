@@ -3,14 +3,24 @@
 */
 
 import { expect, test } from 'vitest';
+import { REPLFunction } from "../../src/components/REPLFunction";
 
+// import { REPLFunction } from '..src/components';
 // all exports from main will now be available as main.X
 // import * as main from '../mock/src/main';
 import * as main from '../../src/main';
 
 test('is 1 + 1 = 2?', () => {
-  expect(1 + 1).toBe(2)
+  const output = REPLFunction(["load_file file1"], true)
+//  const x =  REPLFunction.load_file("file1")
+     expect(output.toString()).toBe("JKBHV")
 })
+
+
+// test('is replfunction working', () => {
+//   const output = REPLFunction(commandString.split(" "), mode)
+//   expect(REPLFunction(commandString.split(" "), mode)).toBe(2)
+// })
 
 // // Notice how you can test vanilla TS functions using Playwright as well!
 // test('main.zero() should return 0', () => {
