@@ -18,7 +18,7 @@ export const exampleCSV3 = [
   ];
 
 export const empty = [
-
+  [],
   ];
 
 

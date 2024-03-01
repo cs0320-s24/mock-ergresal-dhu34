@@ -72,7 +72,7 @@ function view(
   const results: string[] = [];
   if (myData.length != 0) {
     for (let i = 0; i < myData.length; i++) {
-      results.push(myData[i].toString());
+      results.push("row " + i + ": " + myData[i].toString());
     }
   } else {
     results.push("No data loaded");
