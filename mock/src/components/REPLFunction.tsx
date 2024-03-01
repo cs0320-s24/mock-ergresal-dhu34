@@ -8,7 +8,6 @@ import { mock_files } from "./mockedJson";
  * *NOT* contain the command-name prefix.
  */
 
-
 // const [myData, setMyData] = useState<any[][]>([]);
 export interface REPLFunction {
   (
@@ -71,7 +70,7 @@ function view(
   setMyData: React.Dispatch<React.SetStateAction<any[][]>>
 ): string[] {
   const results: string[] = [];
-  if (myData) {
+  if (myData.length != 0) {
     for (let i = 0; i < myData.length; i++) {
       results.push(myData[i].toString());
     }

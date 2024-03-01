@@ -10,9 +10,8 @@ interface REPLInputProps {
   setHistory: Dispatch<SetStateAction<string[][]>>;
   mode: boolean;
   setMode: Dispatch<SetStateAction<boolean>>;
-  myData: any[][]
-  setMyData: Dispatch<SetStateAction<any[][]>>
-  
+  myData: any[][];
+  setMyData: Dispatch<SetStateAction<any[][]>>;
 }
 // You can use a custom interface or explicit fields or both! An alternative to the current function header might be:
 // REPLInput(history: string[], setHistory: Dispatch<SetStateAction<string[]>>)
@@ -32,7 +31,10 @@ export function REPLInput(props: REPLInputProps) {
     setCount(count + 1);
     const output = REPLFunction(
       commandString.split(" "),
-      mode, setMode, myData, setMyData
+      mode,
+      setMode,
+      myData,
+      setMyData
     );
     if (!mode) {
       props.setHistory([...props.history, output]);

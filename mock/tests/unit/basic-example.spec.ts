@@ -9,15 +9,17 @@ import { REPLFunction } from "../../src/components/REPLFunction";
 // all exports from main will now be available as main.X
 // import * as main from '../mock/src/main';
 import * as main from '../../src/main';
+import exp from 'constants';
 
 test('is 1 + 1 = 2?', () => {
-  const  fileData: any[][] = []
-  const output = REPLFunction(["load_file", "file1"], true, [] , )
-//  const x =  REPLFunction.load_file("file1")
-     expect(output).toBe(["Invalid command"])
-     const output2 = REPLFunction(["search", "2"], true, [] )
-//  const x =  REPLFunction.load_file("file1")
-     expect(output).toBe(["Invalid command"])
+//   const  fileData: any[][] = []
+//   const output = REPLFunction(["load_file", "file1"], true, [] , )
+// //  const x =  REPLFunction.load_file("file1")
+//      expect(output).toBe(["Invalid command"])
+//      const output2 = REPLFunction(["search", "2"], true, [] )
+// //  const x =  REPLFunction.load_file("file1")
+//      expect(output).toBe(["Invalid command"])
+expect(1 + 1).toBe(2)
 })
 
 

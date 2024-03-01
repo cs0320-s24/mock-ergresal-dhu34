@@ -17,6 +17,10 @@ export const exampleCSV3 = [
     ["J", "K", "H", "I"],
   ];
 
+export const empty = [
+
+  ];
+
 
 export const exampleCSVInconsistentRow = [
   ["a", "b", "c", "d"],
@@ -31,6 +35,7 @@ export const exampleCSVInconsistentRow = [
   ["file2", exampleCSV2],
   ["file3", exampleCSV3],
   ["file4", exampleCSVInconsistentRow],
+  ["empty", empty],
 ]);
 class MockedJson {}
 export {};
