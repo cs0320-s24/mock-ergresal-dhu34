@@ -1,3 +1,4 @@
+
 export const exampleCSV1 = [
   [1, 2, 3, 4, 5],
   ["The", "song", "remains", "the", "same."],
@@ -16,5 +17,20 @@ export const exampleCSV3 = [
     ["J", "K", "H", "I"],
   ];
 
+
+export const exampleCSVInconsistentRow = [
+  ["a", "b", "c", "d"],
+  ["A"],
+  ["F", "G",],
+  ["J", "K", "H", "I"],
+];
+
+
+ export const mock_files: Map<string, any> = new Map([
+  ["file1", exampleCSV1],
+  ["file2", exampleCSV2],
+  ["file3", exampleCSV3],
+  ["file4", exampleCSVInconsistentRow],
+]);
 class MockedJson {}
 export {};

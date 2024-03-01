@@ -11,7 +11,6 @@ import { REPLFunction } from "../../src/components/REPLFunction";
 import * as main from '../../src/main';
 
 test('is 1 + 1 = 2?', () => {
-  
   const  fileData: any[][] = []
   const output = REPLFunction(["load_file", "file1"], true, [] , )
 //  const x =  REPLFunction.load_file("file1")
