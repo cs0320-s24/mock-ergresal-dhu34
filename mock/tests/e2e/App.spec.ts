@@ -196,5 +196,33 @@ test('after i search with correct params, i get the correct data', async ({ page
   await expect(page.getByLabel("repl history")).toHaveText(/f found in row 2: F,G,H,I/);
 });
 
-//test for behavior after mode change
-//test search
+test('after i switch modes, the outputs and inputs are displayed', async ({ page }) => {
+  await page.goto("http://localhost:8000/");
+
+  await page.getByLabel('Username').fill("cool");
+  await page.getByLabel('Password').fill("bro");
+  await page.getByLabel('Login').click();
+
+  await page.getByLabel('Command input').click();
+  await page.getByLabel('Command input').fill("mode");
+  await page.getByLabel('Submit').click();
+  await expect(page.getByLabel("repl history")).toHaveText("Mode changed");
+  await expect(page.getByText("Mode changed")).toBeVisible();
+
+  await page.getByLabel('Command input').click();
+  await page.getByLabel('Command input').fill("load_file file3");
+  await page.getByLabel('Submit').click();
+  await expect(page.getByLabel("Command input")).toBeEmpty();
+
+  await expect(page.getByLabel("repl history")).toHaveText(/Input: load_file file3/);
+  await expect(page.getByText(/Input: load_file file3/)).toBeVisible();
+  await expect(page.getByLabel("repl history")).toHaveText(/Data loaded successfully/);
+  await expect(page.getByText(/Data loaded successfully/)).toBeVisible();
+
+  await page.getByLabel('Command input').click();
+  await page.getByLabel('Command input').fill("search a F");
+  await page.getByLabel('Submit').click();
+  await expect(page.getByLabel("repl history")).toHaveText(/f found in row 2: F,G,H,I/);
+  await expect(page.getByLabel("repl history")).toHaveText(/Input: search a f/);
+  await expect(page.getByText(/Input: search a f/)).toBeVisible();
+});
