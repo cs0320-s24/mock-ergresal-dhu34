@@ -2,29 +2,34 @@ import { Dispatch, SetStateAction, useState } from "react";
 import "../styles/main.css";
 import { ControlledInput } from "./ControlledInput";
 import { Console } from "console";
-
 import { REPLFunction } from "./REPLFunction";
 
+/**
+ * REPLInputProps interace which requires the parameters to REPLInput include
+ * each of the following
+ */
 interface REPLInputProps {
-  history: string[][];
+  history: string[][]; // history of responses
   setHistory: Dispatch<SetStateAction<string[][]>>;
-  mode: boolean;
+  mode: boolean; // verbose/brief mode
   setMode: Dispatch<SetStateAction<boolean>>;
-  myData: any[][];
+  myData: any[][]; // data as loaded from load_file function
   setMyData: Dispatch<SetStateAction<any[][]>>;
 }
-// You can use a custom interface or explicit fields or both! An alternative to the current function header might be:
-// REPLInput(history: string[], setHistory: Dispatch<SetStateAction<string[]>>)
+/**
+ * Function which handles user command input as inputted from the
+ * command line. This function's handleSubmit gets called upon the user
+ * clicking the submit button. However, in order to carry over our data and
+ * mode, we must create this outer function storing the metadata.
+ * @param props
+ * @returns functionality for each iteration of the button getting clicked
+ */
 export function REPLInput(props: REPLInputProps) {
-  // Remember: let React manage state in your webapp.
   // Manages the contents of the input box
   const [commandString, setCommandString] = useState<string>("");
-  // TODO WITH TA : add a count state
   const [count, setCount] = useState<number>(0);
   const [myData, setMyData] = useState<any[][]>([]);
   const [mode, setMode] = useState<boolean>(false);
-
-  // const [mode, setMode] = useState<boolean>(false);
 
   // This function is triggered when the button is clicked.
   function handleSubmit(commandString: string) {
@@ -37,6 +42,7 @@ export function REPLInput(props: REPLInputProps) {
       setMyData
     );
     if (!mode) {
+      //brief
       props.setHistory([...props.history, output]);
     }
     //verbose
@@ -45,16 +51,9 @@ export function REPLInput(props: REPLInputProps) {
     }
     setCommandString("");
   }
-  /**
-   * We suggest breaking down this component into smaller components, think about the individual pieces
-   * of the REPL and how they connect to each other...
-   */
+
   return (
     <div className="repl-input">
-      {/* This is a comment within the JSX. Notice that it's a TypeScript comment wrapped in
-            braces, so that React knows it should be interpreted as TypeScript */}
-      {/* I opted to use this HTML tag; you don't need to. It structures multiple input fields
-            into a single unit, which makes it easier for screenreaders to navigate. */}
       <fieldset>
         <legend>Enter a command:</legend>
         <ControlledInput
@@ -63,12 +62,11 @@ export function REPLInput(props: REPLInputProps) {
           ariaLabel={"Command input"}
         />
       </fieldset>
-      {/* TODO: Currently this button just counts up, can we make it push the contents of the input box to the history?*/}
       <button
         aria-label={"Submit"}
         onClick={() => handleSubmit(commandString.toLowerCase())}
       >
-        Submitted {count} times
+        Submitted {count} times {/*Updates submit button to count submissions */}
       </button>
     </div>
   );

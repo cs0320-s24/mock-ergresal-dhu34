@@ -6,7 +6,11 @@ interface loginProps {
   isLoggedIn: boolean
   setIsLoggedIn: Dispatch<SetStateAction<boolean>>
 }
-
+/**
+ * Functionality for user clicking the loginbutton
+ * @param props boolean isLoggedIn, whether or not the user was initally loggedin
+ * @returns 
+ */
 export function LoginButton(props: loginProps) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -14,6 +18,9 @@ export function LoginButton(props: loginProps) {
 
   const authenticate = () => {
     const user = mockedUserData.find(user => user.username === username);
+    /*
+    Checks whether this combination of username/password is in mockedUsernames
+    */
     if (!user || user.password !== password) {
       seterrormessage('Invalid username or password');
       return;
@@ -21,6 +28,11 @@ export function LoginButton(props: loginProps) {
     const newValue = !props.isLoggedIn
    
     props.setIsLoggedIn(newValue)
+    /*
+    Resets values of input variables and error message, so if 
+    user signs out, they will go back to a fresh page (their login data won't 
+    be saved in input in cases of using a public computer)
+    */
     if (!newValue){ 
       setUsername('');
       setPassword('');

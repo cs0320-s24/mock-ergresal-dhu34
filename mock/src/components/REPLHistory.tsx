@@ -7,8 +7,6 @@ interface REPLHistoryProps {
 export function REPLHistory(props: REPLHistoryProps) {
   return (
     <div className="repl-history" aria-label="repl history">
-      {/* <table> */}
-      {/* <tbody> */}
       {/* Map over each cell in the row */}
       {props.history.map((row, rowIndex) => (
         <tr key={rowIndex}>
@@ -19,8 +17,6 @@ export function REPLHistory(props: REPLHistoryProps) {
           ))}
         </tr>
       ))}
-      {/* </tbody> */}
-      {/* </table> */}
     </div>
   );
 }

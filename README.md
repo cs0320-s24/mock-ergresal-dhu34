@@ -13,10 +13,33 @@ user. Each previous response will be logged on the webpage, to be accessed
 by the user. 
 
 # Design Choices
+In this project, we opted to intake a command string by the user, handle this 
+using REPLInput.tsx, and then handle the output using REPLFunction.tsk. 
+This REPLFunction was an interface which allowed for a commandMap which mapped
+commands to functions implementing the REPLFunction interface. 
+The output was chosen to be a string array, which made outputting the array in 
+REPLHistory much more simple (we inputted a new paragraph for each mapped
+element of the history array). By having an array, we could place each row
+of the file (in search and view) on a different line, improving user
+accessibility in terms of output readability. 
+See inline comments for further design choices in regards to each function
+(particularly in REPLFunctions.tsk)
 
 # Errors/Bugs
+No bugs were found as of the submission of this project
 
 # Tests
+Our tests focused on the front-end development side of things in this project. 
+In order to test the front-end, we used Playwright testing, which essentially
+awaits a command to take place on a mocked webpage, and searches for
+certain properties of the page, testing it from there. 
+For example, by going to the localhost page created once the server was started,
+then clicking the submit button, and then clicking the submit button, "Invalid
+Input" should be outputted in the REPLHistory array. 
+Our testing files prioritized the functionality of our webpage in terms of 
+our html, css, and typescript files working concurrently and supporting each
+other to support multiple user commands
+For further testing examples, see /tests/e2e/App.spec.ts
 
 # How to
 In order to run this program, (particularly in the VSCode npm environment),
@@ -72,4 +95,8 @@ allowing the program to print each element in the array on a new line.
 # Collaboration
 In this project, we referenced the class-livecode repository as well
 as the mock-gearup in order to implement the majority of our web development. 
-This included style (css files), html (index.html) 
+This included style (css files), html (index.html), and components (typescript).
+We used the LoginButton implementation from the gearup, along with many aspects
+of other components files. However, our implementation of REPLHistory was
+revised to include a string array rather than an array, so we could output
+items on separate lines during each submit iteration. 

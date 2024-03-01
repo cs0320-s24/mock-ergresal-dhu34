@@ -1,4 +1,6 @@
-
+/**
+ * All of these represents mock CSV files as represented by arrays of arrays
+ */
 export const exampleCSV1 = [
   [1, 2, 3, 4, 5],
   ["The", "song", "remains", "the", "same."],
@@ -29,7 +31,10 @@ export const exampleCSVInconsistentRow = [
   ["J", "K", "H", "I"],
 ];
 
-
+/**
+ * maps filenames to the data it represents, filenames to be called in 
+ * load_file {filenames}
+ */
  export const mock_files: Map<string, any> = new Map([
   ["file1", exampleCSV1],
   ["file2", exampleCSV2],
