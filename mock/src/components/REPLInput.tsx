@@ -23,7 +23,7 @@ export function REPLInput(props: REPLInputProps) {
   // TODO WITH TA : add a count state
   const [count, setCount] = useState<number>(0);
   const [myData, setMyData] = useState<any[][]>([]);
-  const [mode, setMode] = useState<any[][]>([]);
+  const [mode, setMode] = useState<boolean>(false);
 
   // const [mode, setMode] = useState<boolean>(false);
 
@@ -34,7 +34,7 @@ export function REPLInput(props: REPLInputProps) {
       commandString.split(" "),
       mode, setMode, myData, setMyData
     );
-    if (!props.mode) {
+    if (!mode) {
       props.setHistory([...props.history, output]);
     }
     //verbose
