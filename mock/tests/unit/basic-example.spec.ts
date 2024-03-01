@@ -11,9 +11,14 @@ import { REPLFunction } from "../../src/components/REPLFunction";
 import * as main from '../../src/main';
 
 test('is 1 + 1 = 2?', () => {
-  const output = REPLFunction(["load_file file1"], true)
+  
+  const  fileData: any[][] = []
+  const output = REPLFunction(["load_file", "file1"], true, [] , )
 //  const x =  REPLFunction.load_file("file1")
-     expect(output.toString()).toBe("JKBHV")
+     expect(output).toBe(["Invalid command"])
+     const output2 = REPLFunction(["search", "2"], true, [] )
+//  const x =  REPLFunction.load_file("file1")
+     expect(output).toBe(["Invalid command"])
 })
 
 

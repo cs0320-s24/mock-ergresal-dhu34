@@ -9,6 +9,10 @@ interface REPLInputProps {
   history: string[][];
   setHistory: Dispatch<SetStateAction<string[][]>>;
   mode: boolean;
+  setMode: Dispatch<SetStateAction<boolean>>;
+  myData: any[][]
+  setMyData: Dispatch<SetStateAction<any[][]>>
+  
 }
 // You can use a custom interface or explicit fields or both! An alternative to the current function header might be:
 // REPLInput(history: string[], setHistory: Dispatch<SetStateAction<string[]>>)
@@ -19,20 +23,18 @@ export function REPLInput(props: REPLInputProps) {
   // TODO WITH TA : add a count state
   const [count, setCount] = useState<number>(0);
   const [myData, setMyData] = useState<any[][]>([]);
-  const [mode, setMode] = useState<boolean>(false);
+  const [mode, setMode] = useState<any[][]>([]);
+
+  // const [mode, setMode] = useState<boolean>(false);
 
   // This function is triggered when the button is clicked.
   function handleSubmit(commandString: string) {
     setCount(count + 1);
     const output = REPLFunction(
       commandString.split(" "),
-      mode,
-      myData,
-      setMyData,
-      mode,
-      setMode
+      mode, setMode, myData, setMyData
     );
-    if (!mode) {
+    if (!props.mode) {
       props.setHistory([...props.history, output]);
     }
     //verbose
